@@ -8,5 +8,38 @@
   </head>
   <body>
     <h1>Página de Login</h1>
+    <form id="login">
+      <label for="username">Nome de Usuário:</label>
+      <input type="text" id="username" name="username" required />
+
+      <label for="password">Senha:</label>
+      <input type="password" id="password" name="password" required />
+
+      <button type="submit">Entrar</button>
+    </form>
+    <script>
+      const form = document.getElementById("login");
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        fetch("/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              alert("Login bem-sucedido!");
+              window.location.href = "/";
+            } else {
+              alert(data.message);
+            }
+          });
+      });
+    </script>
   </body>
 </html>
