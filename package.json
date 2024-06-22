@@ -2,15 +2,17 @@
   "name": "novo",
   "version": "1.0.0",
   "description": "Não tinha nome melhor do que isso",
-  "main": "index.js",
+  "main": "src/App.js",
+  "type": "module",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "nodemon src/App.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.19.2",
     "nodemon": "^3.1.4"
   }
