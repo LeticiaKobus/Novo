@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="stylesheet" href="../globals.css" />
+        <!-- Inclui um arquivo de estilo global -->
+        <link rel="stylesheet" href="../CSS\login.css" />
+        <!-- Inclui um arquivo de estilo específico para a página principal -->
+        <link rel="icon" href="../ICON/favicon.ico" />
+        <!-- Define o ícone da página -->
+        <title>Inu's Rings - Principal</title>
+      </head>
+  <body>
+    <div class="container">
+        <header>
+          <div class="esquerda">
+            <!-- Logo e nome da empresa -->
+            <a class="logo" href="../index.html"
+              ><img src="../IMG/logo.png" alt="logo"
+            /></a>
+            <a class="nome" href="../index.html">Inu's Rings</a>
+          </div>
+          <nav>
+            <!-- Menu de navegação -->
+            <ul class="menu">
+              <li><a href="../pages/sobre.html">Sobre</a></li>
+              <!-- Link para a página "Sobre" -->
+              <li>
+                <a href="../pages/carrinho.html"
+                  ><img src="../ICON/carrinho.png" alt="carrinho" class="carrinho"
+                /></a>
+                <!-- Link para a página do carrinho -->
+              </li>
+            </ul>
+          </nav>
+        </header>
+    <div class="page" action="./login.php" method= "POST">
+      <form method="POST" class="formLogin">
+        <h1>Login</h1>
+        <p>Digite os seus dados de acesso no campo abaixo.</p>
+        <label for="email">E-mail</label>
+        <input type="email" name="email" id="password" placeholder="Digite seu e-mail" autofocus="true" required/>
+        <label for="password">Senha</label>
+        <input type="password" name="password" id="password" placeholder="Digite sua senha" required/>
+        <a href="/">Esqueci minha senha</a>
+        <input type="submit" value="Acessar" class="btn" />
+      </form>
+    </div>
+  </body>
+</html>
