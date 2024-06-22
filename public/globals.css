@@ -126,6 +126,29 @@ nav ul .user .userLink {
   align-items: center;
 }
 
+nav ul .user .userImg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: rgb(255, 244, 232);
+  transition: box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+nav ul .user .userImg:hover {
+  box-shadow: 0 0 10px rgb(255, 244, 232);
+}
+
+nav ul .user .userImg img {
+  object-fit: cover;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
 nav ul .user .userInfo {
   display: flex;
   justify-content: center;
