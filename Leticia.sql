@@ -1,0 +1,34 @@
+DROP DATABASE IF EXISTS novo;
+
+CREATE DATABASE novo;
+USE novo;
+
+CREATE TABLE Users (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    Username VARCHAR(50) NOT NULL UNIQUE,
+    UserImage LONGBLOB,
+    Email VARCHAR(100) NOT NULL UNIQUE,
+    PasswordHash VARCHAR(255) NOT NULL,
+    FullName VARCHAR(100),
+    DateOfBirth DATE,
+    Phone VARCHAR(20)
+);
+
+CREATE TABLE Products (
+    ProductID INT AUTO_INCREMENT PRIMARY KEY,
+    ProductName VARCHAR(100) NOT NULL,
+    ProductImage LONGBLOB,
+    Description TEXT,
+    Price DECIMAL(10, 2) NOT NULL,
+    Stock INT NOT NULL
+);
+
+CREATE TABLE UserCart (
+    CartID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT,
+    ProductID INT,
+    Quantity INT NOT NULL DEFAULT 1,
+    AddedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Inu's Rings - Cadastro</title>
+  </head>
+  <body>
+    <h1>Página de Cadastro</h1>
+    <form id="cadastro">
+      <label for="name">Foto de Perfil:</label>
+      <input
+        type="file"
+        id="profilePhoto"
+        name="profilePhoto"
+        accept="image/*"
+        required
+      />
+      <label for="fullname">Nome Completo:</label>
+      <input
+        type="text"
+        id="fullname"
+        name="fullname"
+        autocomplete="name"
+        required
+      />
+      <label for="email">Email:</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        autocomplete="email"
+        required
+      />
+      <label for="birthday">Data de Nascimento:</label>
+      <input
+        type="date"
+        id="birthday"
+        name="birthday"
+        autocomplete="bday"
+        required
+      />
+      <label for="telephone">Telefone:</label>
+      <input
+        type="tel"
+        id="telephone"
+        name="telephone"
+        autocomplete="tel"
+        required
+      />
+      <label for="username">Nome de Usuário:</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        autocomplete="username"
+        required
+      />
+      <label for="password">Senha:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        autocomplete="current-password"
+        required
+      />
+      <button type="submit">Cadastrar</button>
+    </form>
+    <script>
+      const form = document.getElementById("cadastro");
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(); // Cria um objeto FormData
+
+        // Adiciona os campos do formulário ao FormData
+        formData.append(
+          "profilePhoto",
+          document.getElementById("profilePhoto").files[0]
+        );
+        formData.append("fullname", document.getElementById("fullname").value);
+        formData.append("email", document.getElementById("email").value);
+        formData.append("birthday", document.getElementById("birthday").value);
+        formData.append(
+          "telephone",
+          document.getElementById("telephone").value
+        );
+        formData.append("username", document.getElementById("username").value);
+        formData.append("password", document.getElementById("password").value);
+
+        fetch("/cadastro", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              alert("Usuário criado com sucesso!");
+              window.location.href = "/";
+            } else {
+              alert(data.message);
+            }
+          })
+          .catch((error) => {
+            console.error("Erro ao enviar formulário:", error);
+          });
+      });
+    </script>
+  </body>
+</html>
