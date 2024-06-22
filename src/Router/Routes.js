@@ -14,6 +14,7 @@ const router = express.Router();
 // Use a chave secreta do arquivo .env
 const SECRET_KEY = process.env.SECRET_KEY;
 
+// Cria um middleware para lidar com o envio de arquivos
 const upload = multer({ dest: "public/Uploads/" });
 
 const indexRoute = function (req, res) {
