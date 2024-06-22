@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./globals.css" />
+    <!-- Inclui um arquivo de estilo global -->
+    <link rel="stylesheet" href="./CSS/index.css" />
+    <!-- Inclui um arquivo de estilo específico para a página principal -->
+    <link rel="icon" href="./ICON/favicon.ico" />
+    <!-- Define o ícone da página -->
+    <title>Inu's Rings - Principal</title>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="esquerda">
+          <!-- Logo e nome da empresa -->
+          <a class="logo" href="./index.html"
+            ><img src="./IMG/logo.png" alt="logo"
+          /></a>
+          <a class="nome" href="./index.html">Inu's Rings</a>
+        </div>
+        <nav>
+          <!-- Menu de navegação -->
+          <ul class="menu">
+            <li><a href="./PAGES/sobre.html">Sobre</a></li>
+            <!-- Link para a página "Sobre" -->
+            <li><a href="./PAGES/login.html">Login</a></li>
+            <!-- Link para a página "Login" -->
+            <li>
+              <a href="./PAGES/carrinho.html"
+                ><img src="./ICON/carrinho.png" alt="carrinho" class="carrinho"
+              /></a>
+              <!-- Link para a página do carrinho -->
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        <!-- Seção de produtos para comprar -->
+        <section>
+          <button type="button" class="buttons left">&lt;</button>
+          <!-- Botão para navegar para a esquerda -->
+          <h1 class="titulo">Anéis para Comprar</h1>
+          <!-- Título da seção -->
+          <div class="card" id="aneis"></div>
+          <!-- Container para os anéis -->
+          <button type="button" class="buttons right">&gt;</button>
+          <!-- Botão para navegar para a direita -->
+        </section>
+        <section>
+          <button type="button" class="buttons left">&lt;</button>
+          <h1 class="titulo">Colares para Comprar</h1>
+          <div class="card" id="colares"></div>
+          <button type="button" class="buttons right">&gt;</button>
+        </section>
+        <section>
+          <button type="button" class="buttons left">&lt;</button>
+          <h1 class="titulo">Pulseiras para Comprar</h1>
+          <div class="card" id="pulseiras"></div>
+          <button type="button" class="buttons right">&gt;</button>
+        </section>
+      </main>
+      <footer>
+        <div class="footer-content">
+          <!-- Seção de informações sobre a empresa -->
+          <div class="footer-section">
+            <h3 class="titulo">Sobre Nós:</h3>
+            <p>
+              Somos a Inu's Rings, apaixonados por joias e comprometidos em
+              oferecer produtos de qualidade que celebram momentos especiais na
+              vida de nossos clientes.
+            </p>
+            <div class="contact">
+              <!-- Informações de contato -->
+              <h3>Contatos:</h3>
+              <div>
+                <h4>Leticia Kobus</h4>
+                <p>+55 (47) 99130-3320</p>
+              </div>
+              <div>
+                <h4>Miguel Amaro</h4>
+                <p>+55 (47) 99966-0991</p>
+              </div>
+            </div>
+          </div>
+          <!-- Seção de links rápidos -->
+          <div class="footer-section">
+            <h3 class="titulo">Links Rápidos:</h3>
+            <ul>
+              <li><a href="./index.html">Principal</a></li>
+              <li><a href="./PAGES/sobre.html">Sobre</a></li>
+              <li><a href="./PAGES/carrinho.html">Carrinho</a></li>
+            </ul>
+          </div>
+        </div>
+        <div id="footer-bottom" class="footer-bottom"></div>
+        <!-- Rodapé da página -->
+      </footer>
+    </div>
+    <!--Scripts-->
+    <script src="./JS/dados.js"></script>
+    <!-- Script para carregar os dados dos produtos -->
+    <script src="./JS/index.js"></script>
+    <!-- Script para interatividade da página principal -->
+    <script>
+      // Script para exibir o ano atual no rodapé
+      document.getElementById(
+        "footer-bottom"
+      ).innerHTML = `&copy; ${new Date().getFullYear()} Inu's Rings | Todos os direitos reservados`;
+    </script>
+  </body>
+</html>
