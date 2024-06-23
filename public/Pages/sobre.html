@@ -4,27 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="./globals.css" />
-    <link rel="stylesheet" href="./Css/index.css" />
-    <link rel="icon" href="./Images/Icons/favicon.ico" />
-    <title>Inu's Rings - Principal</title>
+    <link rel="stylesheet" href="../globals.css" />
+    <link rel="stylesheet" href="../Css/sobre.css" />
+    <link rel="icon" href="../Images/Icons/favicon.ico" />
+    <title>Inu's Rings - Sobre</title>
   </head>
   <body>
     <div class="container">
       <header>
         <div class="esquerda">
-          <a class="logo" href="./index.html"
-            ><img src="./Images/Photos/Logo.png" alt="Logo" />
+          <a class="logo" href="../index.html"
+            ><img src="../Images/Photos/Logo.png" alt="Logo" />
             <h2 class="nome">Inu's Rings</h2></a
           >
         </div>
         <nav>
           <ul class="menu">
-            <li><a href="./Pages/sobre.html">Sobre</a></li>
             <li>
-              <a href="./Pages/carrinho.html"
+              <a href="./carrinho.html"
                 ><img
-                  src="./Images/Icons/Ico-Carrinho.png"
+                  src="../Images/Icons/Ico-Carrinho.png"
                   alt="carrinho"
                   class="carrinho"
               /></a>
@@ -42,24 +41,43 @@
         </nav>
       </header>
       <main>
-        <section>
-          <button type="button" class="buttons left">&lt;</button>
-          <h1 class="titulo">Anéis para Comprar</h1>
-          <div class="cards" id="aneis"></div>
-          <button type="button" class="buttons right">&gt;</button>
-        </section>
-        <section>
-          <button type="button" class="buttons left">&lt;</button>
-          <h1 class="titulo">Colares para Comprar</h1>
-          <div class="cards" id="colares"></div>
-          <button type="button" class="buttons right">&gt;</button>
-        </section>
-        <section>
-          <button type="button" class="buttons left">&lt;</button>
-          <h1 class="titulo">Pulseiras para Comprar</h1>
-          <div class="cards" id="pulseiras"></div>
-          <button type="button" class="buttons right">&gt;</button>
-        </section>
+        <article class="card">
+          <figure>
+            <img
+              src="../Images/Photos/Leticia.png"
+              alt="Foto da Leticia"
+              class="foto"
+            />
+          </figure>
+          <figcaption>
+            <h1>Leticia</h1>
+          </figcaption>
+          <p>
+            Uma menina dedicada, organizada, mas desleixada quando desanima.
+            Bonita, carismática, estressada, porém fofa. Cheia de surpresas,
+            gosta de fanfics bregas e ser durona, mas tem uma vibe tranquila e
+            cativante. Ama filmes, séries, desenhos, família, animais e escrever
+            histórias.
+          </p>
+        </article>
+        <article class="card">
+          <figure>
+            <img
+              src="../Images/Photos/Miguel.png"
+              alt="Foto do Miguel"
+              class="foto"
+            />
+          </figure>
+          <figcaption>
+            <h1>Miguel</h1>
+          </figcaption>
+          <p>
+            Um cara gente boa, apaixonado por tecnologia, sempre disposto a
+            ajudar. Paciente, com um coração enorme, gosta de enfrentar desafios
+            e aprender. Adora programar, jogar videogame, assistir filmes de
+            ficção científica e cozinhar, experimentando novas receitas.
+          </p>
+        </article>
       </main>
       <footer>
         <div class="footer-content">
@@ -85,17 +103,16 @@
           <div class="footer-section">
             <h3 class="titulo">Links Rápidos:</h3>
             <ul>
-              <li><a href="./index.html">Principal</a></li>
-              <li><a href="./PAGES/sobre.html">Sobre</a></li>
-              <li><a href="./PAGES/carrinho.html">Carrinho</a></li>
+              <li><a href="../index.html">Principal</a></li>
+              <li><a href="./sobre.html">Sobre</a></li>
+              <li><a href="./carrinho.html">Carrinho</a></li>
             </ul>
           </div>
         </div>
         <div id="footer-bottom" class="footer-bottom"></div>
       </footer>
     </div>
-    <script src="./globals.js"></script>
-    <script src="./Javascript/index.js"></script>
+    <script src="../globals.js"></script>
     <script>
       document.getElementById(
         "footer-bottom"

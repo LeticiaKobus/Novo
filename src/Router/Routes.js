@@ -5,7 +5,10 @@ import fs from "fs";
 import jwt from "jsonwebtoken";
 import multer from "multer";
 import createUser from "../Server/Commands/createUser.js";
-import getUser from "../Server/Commands/getUser.js";
+import getProductById from "../Server/Commands/getProductById.js";
+import getProducts from "../Server/Commands/getProducts.js";
+import getUserById from "../Server/Commands/getUserById.js";
+import getUserByUsername from "../Server/Commands/getUserByUsername.js";
 
 dotenv.config(); // Carrega as variáveis de ambiente do arquivo .env
 
@@ -30,7 +33,9 @@ const indexRoute = function (req, res) {
 
     res.sendFile("index.html", {
       root: "public",
-      headers: { "Set-Cookie": `token=${token}` },
+      headers: {
+        "Set-Cookie": `token=${token}`,
+      },
     }); // Envia o arquivo "index.html" como resposta quando o usuário acessa http://localhost:3000 e o token está correto
   });
 };
@@ -53,7 +58,7 @@ const loginUser = async function (req, res) {
   }
 
   // Verifica se o usuário existe
-  const user = await getUser(username);
+  const user = await getUserByUsername(username);
 
   if (user == null) {
     res.json({ success: false, message: "Usuário não encontrado." }); // Envia uma resposta de falha ao cliente
@@ -99,11 +104,11 @@ const cadastroUser = async function (req, res) {
 
   // Função para criptografar a senha
   const hashPassword = (password) => {
-    return bycript.hashSync(password, bycript.genSaltSync(10));
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
   };
 
   // Verifica se o usuário existe
-  const userExists = await getUser(username);
+  const userExists = await getUserByUsername(username);
   if (userExists != null) {
     res.json({ success: false, message: "Usuário já existe." }); // Envia uma resposta de falha ao cliente
     return;
@@ -137,6 +142,23 @@ const logout = function (req, res) {
   res.json({ success: true }); // Envia uma resposta de sucesso ao cliente
 };
 
+const getAllProducts = async function (req, res) {
+  const products = await getProducts();
+  res.json({ success: true, products });
+};
+
+const getOneProduct = async function (req, res) {
+  const { id } = req.params;
+  const product = await getProductById(id);
+  res.json({ success: true, product });
+};
+
+const getOneUser = async function (req, res) {
+  const { id } = req.params;
+  const user = await getUserById(id);
+  res.json({ success: true, user });
+};
+
 // Configuração das rotas
 router.get("/", indexRoute);
 
@@ -147,5 +169,10 @@ router.get("/cadastro", cadastroRoute);
 router.post("/cadastro", upload.single("profilePhoto"), cadastroUser);
 
 router.get("/logout", logout);
+
+router.get("/products", getAllProducts);
+router.get("/product/:id", getOneProduct);
+
+router.get("/user/:id", getOneUser);
 
 export default router;
