@@ -90,7 +90,7 @@ setInterval(() => {
   }
 }, 1000);
 
-// Pegar os dados do Usuário no "Banco de Dados"
+// Pegar os dados do Usuário no Banco de Dados
 function getUser() {
   const token = getCookie("token");
   if (token) {

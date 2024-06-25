@@ -1,4 +1,4 @@
-// Pegar dados dos Produtos no "Banco de Dados"
+// Pegar dados dos Produtos no Banco de Dados
 function getProdutos() {
   fetch("/products")
     .then((response) => response.json())
@@ -10,60 +10,39 @@ function getProdutos() {
           });
           const imageUrl = URL.createObjectURL(blob);
 
-          if (product.ProductType === "Anel") {
-            const aneis = document.getElementById("aneis");
-            const anel = document.createElement("div");
-            anel.classList.add("item");
-            anel.id = product.ProductID;
-            anel.innerHTML = `
+          const createProductElement = (containerId) => {
+            const container = document.getElementById(containerId);
+            const productElement = document.createElement("div");
+            productElement.classList.add("item");
+            productElement.id = product.ProductID;
+            productElement.innerHTML = `
               <h1 class="nome">${product.ProductName}</h1>
               <img class="imagem" src="${imageUrl}" alt="${product.ProductName}" />
               <p class="descricao">${product.Description}</p>
               <p class="preco">R$ ${product.Price}</p>
-              <form class="form" id="${product.ProductID}">
+              <form class="form" id="visualizar">
                   <button class="botao" type="submit">Visualizar Produto</button>
               </form>
-              <form class="form" id="${product.ProductID}">
-                  <button class="carrinho" type="submit" onclick="adicionarCarrinho(${product.Stock}, ${product.ProductID})">Adicionar ao Carrinho</button>
+              <form class="form" id="carrinho">
+                  <button class="carrinho" type="button" onclick="adicionarCarrinho(${product.ProductID})">Adicionar ao Carrinho</button>
               </form>
             `;
-            aneis.appendChild(anel);
-          } else if (product.ProductType === "Colar") {
-            const colares = document.getElementById("colares");
-            const colar = document.createElement("div");
-            colar.classList.add("item");
-            colar.id = product.ProductID;
-            colar.innerHTML = `
-              <h1 class="nome">${product.ProductName}</h1>
-              <img class="imagem" src="${imageUrl}" alt="${product.ProductName}" />
-              <p class="descricao">${product.Description}</p>
-              <p class="preco">R$ ${product.Price}</p>
-              <form class="form" id="${product.ProductID}">
-                  <button class="botao" type="submit">Visualizar Produto</button>
-              </form>
-              <form class="form" id="${product.ProductID}">
-                  <button class="carrinho" type="submit" onclick="adicionarCarrinho(${product.Stock}, ${product.ProductID})">Adicionar ao Carrinho</button>
-              </form>
-            `;
-            colares.appendChild(colar);
-          } else if (product.ProductType === "Pulseira") {
-            const pulseiras = document.getElementById("pulseiras");
-            const pulseira = document.createElement("div");
-            pulseira.classList.add("item");
-            pulseira.id = product.ProductID;
-            pulseira.innerHTML = `
-              <h1 class="nome">${product.ProductName}</h1>
-              <img class="imagem" src="${imageUrl}" alt="${product.ProductName}" />
-              <p class="descricao">${product.Description}</p>
-              <p class="preco">R$ ${product.Price}</p>
-              <form class="form" id="${product.ProductID}">
-                  <button class="botao" type="submit">Visualizar Produto</button>
-              </form>
-              <form class="form" id="${product.ProductID}">
-                  <button class="carrinho" type="submit" onclick="adicionarCarrinho(${product.Stock}, ${product.ProductID})">Adicionar ao Carrinho</button>
-              </form>
-            `;
-            pulseiras.appendChild(pulseira);
+            container.appendChild(productElement);
+          };
+
+          switch (product.ProductType) {
+            case "Combo":
+              createProductElement("combos");
+              break;
+            case "Anel":
+              createProductElement("aneis");
+              break;
+            case "Colar":
+              createProductElement("colares");
+              break;
+            case "Pulseira":
+              createProductElement("pulseiras");
+              break;
           }
         });
       } else {
@@ -106,3 +85,25 @@ function getProdutos() {
 }
 
 getProdutos();
+
+function adicionarCarrinho(id) {
+  fetch("/cart", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ProductID: id }),
+    credentials: "include", // Inclui cookies na requisição
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        alert("Adicionado ao carrinho com sucesso!");
+      } else {
+        console.error("Erro ao adicionar produto ao carrinho:", data.message);
+      }
+    })
+    .catch((error) =>
+      console.error("Erro na requisição para adicionar ao carrinho:", error)
+    );
+}

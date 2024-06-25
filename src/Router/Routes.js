@@ -4,11 +4,14 @@ import express from "express";
 import fs from "fs";
 import jwt from "jsonwebtoken";
 import multer from "multer";
+import addProductToCart from "../Server/Commands/addProductToCart.js";
 import createUser from "../Server/Commands/createUser.js";
 import getProductById from "../Server/Commands/getProductById.js";
 import getProducts from "../Server/Commands/getProducts.js";
+import getProductsOfCart from "../Server/Commands/getProductsOfCart.js";
 import getUserById from "../Server/Commands/getUserById.js";
 import getUserByUsername from "../Server/Commands/getUserByUsername.js";
+import removeProductFromCart from "../Server/Commands/removeProductFromCart.js";
 
 dotenv.config(); // Carrega as variáveis de ambiente do arquivo .env
 
@@ -20,6 +23,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 // Cria um middleware para lidar com o envio de arquivos
 const upload = multer({ dest: "public/Uploads/" });
 
+// DEFINIR ROTAS ------------------------------------------------------------------------------------------------------------------
 const indexRoute = function (req, res) {
   const token = req.cookies.token; // Recebe o token armazenado no cookie "token"
   if (token == null) {
@@ -40,6 +44,25 @@ const indexRoute = function (req, res) {
   });
 };
 
+const carrinhoRoute = function (req, res) {
+  const token = req.cookies.token; // Recebe o token armazenado no cookie "token"
+  if (token == null) {
+    return res.redirect("/login"); // Redireciona para a rota "/login" se o token for nulo
+  }
+
+  jwt.verify(token, SECRET_KEY, (err, decoded) => {
+    if (err) {
+      return res.redirect("/login"); // Redireciona para a rota "/login" se o token for inválido
+    }
+
+    res.sendFile("Pages/carrinho.html", { root: "public" }); // Envia o arquivo "carrinho.html" como resposta quando o usuário acessa http://localhost:3000/carrinho e o token está correto
+  });
+};
+
+const sobreRoute = function (req, res) {
+  res.sendFile("Pages/sobre.html", { root: "public" }); // Envia o arquivo "sobre.html" como resposta quando o usuário acessa http://localhost:3000/sobre
+};
+
 const loginRoute = function (req, res) {
   const token = req.cookies.token; // Recebe o token armazenado no cookie "token"
   if (token != null) {
@@ -48,6 +71,23 @@ const loginRoute = function (req, res) {
 
   res.sendFile("Pages/login.html", { root: "public" }); // Envia o arquivo "login.html" como resposta quando o usuário acessa http://localhost:3000/login
 };
+
+const cadastroRoute = function (req, res) {
+  res.sendFile("Pages/cadastro.html", { root: "public" }); // Envia o arquivo "cadastro.html" como resposta quando o usuário acessa http://localhost:3000/cadastro
+};
+
+const productRoute = function (req, res) {
+  const { id } = req.params; // Recebe o ID do produto a partir da rota "/product/:id"
+
+  if (id == null) {
+    res.json({ success: false }); // Envia uma resposta de falha ao cliente
+    return;
+  }
+
+  res.sendFile(`Pages/product.html`, { root: "public" }); // Envia o arquivo "product.html" como resposta quando o usuário acessa http://localhost:3000/product/:id
+};
+
+// -----------------------------------------------------------------------------------------------------------------------------------
 
 const loginUser = async function (req, res) {
   const { username, password } = req.body; // Recebe os dados do formulário
@@ -79,10 +119,6 @@ const loginUser = async function (req, res) {
   } catch (err) {
     console.error("Erro ao verificar a senha:", err);
   }
-};
-
-const cadastroRoute = function (req, res) {
-  res.sendFile("Pages/cadastro.html", { root: "public" }); // Envia o arquivo "cadastro.html" como resposta quando o usuário acessa http://localhost:3000/cadastro
 };
 
 const cadastroUser = async function (req, res) {
@@ -142,37 +178,125 @@ const logout = function (req, res) {
   res.json({ success: true }); // Envia uma resposta de sucesso ao cliente
 };
 
+// -----------------------------------------------------------------------------------------------------------------------------------
+
 const getAllProducts = async function (req, res) {
   const products = await getProducts();
+  if (products == null) {
+    res.json({ success: false });
+  }
   res.json({ success: true, products });
 };
 
 const getOneProduct = async function (req, res) {
   const { id } = req.params;
   const product = await getProductById(id);
+  if (product == null) {
+    res.json({ success: false });
+  }
   res.json({ success: true, product });
 };
 
 const getOneUser = async function (req, res) {
   const { id } = req.params;
   const user = await getUserById(id);
+  if (user == null) {
+    res.json({ success: false });
+  }
   res.json({ success: true, user });
 };
 
+const getProductsByCart = async function (req, res) {
+  const token = req.cookies.token;
+  if (token == null) {
+    res.json({ success: false });
+    return;
+  }
+
+  jwt.verify(token, SECRET_KEY, async (err, decoded) => {
+    if (err) {
+      res.json({ success: false });
+      return;
+    }
+
+    try {
+      const products = await getProductsOfCart(decoded.userId);
+      res.json({ success: true, products });
+    } catch (error) {
+      console.error(error);
+      res.json({ success: false });
+    }
+  });
+};
+
+const adicionarCarrinho = async function (req, res) {
+  const { ProductID } = req.body;
+  const token = req.cookies.token;
+  if (token == null) {
+    res.json({ success: false });
+    return;
+  }
+
+  jwt.verify(token, SECRET_KEY, async (err, decoded) => {
+    if (err) {
+      res.json({ success: false });
+      return;
+    }
+
+    try {
+      await addProductToCart(decoded.userId, ProductID);
+      res.json({ success: true });
+    } catch (error) {
+      console.error(error);
+      res.json({ success: false });
+    }
+  });
+};
+
+const removerCarrinho = async function (req, res) {
+  const { ProductID } = req.body;
+  const token = req.cookies.token;
+  if (token == null) {
+    res.json({ success: false });
+    return;
+  }
+
+  jwt.verify(token, SECRET_KEY, async (err, decoded) => {
+    if (err) {
+      res.json({ success: false });
+      return;
+    }
+
+    try {
+      await removeProductFromCart(decoded.userId, ProductID);
+      res.json({ success: true });
+    } catch (error) {
+      console.error(error);
+      res.json({ success: false });
+    }
+  });
+};
+
+// -----------------------------------------------------------------------------------------------------------------------------------
+
 // Configuração das rotas
 router.get("/", indexRoute);
-
 router.get("/login", loginRoute);
-router.post("/login", loginUser);
-
+router.get("/sobre", sobreRoute);
 router.get("/cadastro", cadastroRoute);
-router.post("/cadastro", upload.single("profilePhoto"), cadastroUser);
+router.get("/carrinho", carrinhoRoute);
+router.get("/product/:id", productRoute);
 
+router.post("/cadastro", upload.single("profilePhoto"), cadastroUser);
+router.post("/login", loginUser);
 router.get("/logout", logout);
 
 router.get("/products", getAllProducts);
 router.get("/product/:id", getOneProduct);
-
 router.get("/user/:id", getOneUser);
+
+router.get("/cart", getProductsByCart);
+router.post("/cart", adicionarCarrinho);
+router.delete("/cart", removerCarrinho);
 
 export default router;

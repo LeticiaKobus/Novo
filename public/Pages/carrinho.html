@@ -13,14 +13,14 @@
     <div class="container">
       <header>
         <div class="esquerda">
-          <a class="logo" href="../index.html"
+          <a class="logo" href="/"
             ><img src="../Images/Photos/Logo.png" alt="Logo" />
             <h2 class="nome">Inu's Rings</h2></a
           >
         </div>
         <nav>
           <ul class="menu">
-            <li><a href="./sobre.html">Sobre</a></li>
+            <li><a href="/sobre">Sobre</a></li>
             <div class="user">
               <a class="userImg">
                 <img id="userImg" alt="Imagem do Usuário" />
@@ -37,9 +37,14 @@
         <section>
           <h1 class="titulo">Carrinho de Compras</h1>
           <div class="card" id="carrinho"></div>
-          <h3 class="total" id="total"></h3>
-          <button class="botao" id="finalizar" type="button">
-            > Finalizar Compra
+          <h3 class="total" id="total" style="display: none"></h3>
+          <button
+            class="botao"
+            style="display: none"
+            id="finalizar"
+            type="button"
+          >
+            Finalizar Compra
           </button>
         </section>
       </main>
@@ -67,9 +72,9 @@
           <div class="footer-section">
             <h3 class="titulo">Links Rápidos:</h3>
             <ul>
-              <li><a href="../index.html">Principal</a></li>
-              <li><a href="./sobre.html">Sobre</a></li>
-              <li><a href="./carrinho.html">Carrinho</a></li>
+              <li><a href="/">Principal</a></li>
+              <li><a href="/sobre">Sobre</a></li>
+              <li><a href="/carrinho">Carrinho</a></li>
             </ul>
           </div>
         </div>
@@ -77,6 +82,7 @@
       </footer>
     </div>
     <script src="../globals.js"></script>
+    <script src="../Javascript/carrinho.js"></script>
     <script>
       document.getElementById(
         "footer-bottom"
